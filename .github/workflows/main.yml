@@ -22,7 +22,7 @@ jobs:
         run: |
           docker build \
              --cache-from ${{ env.IMAGE }}:latest \
-             --tag ${{ env.IMAGE }}:latest \
+             --tag smitsgit/${{ env.IMAGE }}:latest \
              --file ./Dockerfile.prod \
              "."
       - name: Push Image
