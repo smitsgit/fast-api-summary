@@ -1,7 +1,7 @@
 name: Cotinuous integration and delivery
 on: [push]
 env:
-  IMAGE: docker.pkg.github.com/https://github.com/smitsgit/fast-api-summary/web
+  IMAGE: docker.pkg.github.com/fast-api-summary/web
 
 jobs:
 
