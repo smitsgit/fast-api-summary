@@ -26,4 +26,4 @@ async def get_single_summary(id: int):
 @router.post("/", response_model=SummaryResponseSchema, status_code=201)
 async def add_summary(payload: SummaryPayloadSchema):
     summary_id = await crud.post(payload)
-    return {'id': summary_id, 'url': payload.url}
+    return {"id": summary_id, "url": payload.url}

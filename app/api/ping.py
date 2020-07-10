@@ -4,10 +4,10 @@ from ..config import get_settings, Settings
 router = APIRouter()
 
 
-@router.get('/ping')
+@router.get("/ping")
 async def hello(settings: Settings = Depends(get_settings)):
     return {
-        'ping': 'pong!',
-        'environment': settings.environment,
-        'testing': settings.testing,
+        "ping": "pong!",
+        "environment": settings.environment,
+        "testing": settings.testing,
     }
