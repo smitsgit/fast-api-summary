@@ -1,7 +1,7 @@
 name: Cotinuous integration and delivery
 on: [push]
 env:
-  IMAGE: docker.pkg.github.com/fast-api-summary/web
+  IMAGE: docker.pkg.github.com/smitsgit/fast-api-summary/web
 
 jobs:
 
@@ -22,12 +22,12 @@ jobs:
         run: |
           docker build \
              --cache-from ${{ env.IMAGE }}:latest \
-             --tag smitsgit/${{ env.IMAGE }}:latest \
+             --tag ${{ env.IMAGE }}:latest \
              --file ./Dockerfile.prod \
              "."
       - name: Push Image
         run: |
-          docker push smitsgit/${{ env.IMAGE}}:latest
+          docker push ${{ env.IMAGE}}:latest
 
   test:
     name: Test Docker Image
@@ -47,7 +47,7 @@ jobs:
         run: |
           docker build \
              --cache-from ${{ env.IMAGE }}:latest \
-             --tag smitsgit/${{ env.IMAGE }}:latest \
+             --tag ${{ env.IMAGE }}:latest \
              --file ./Dockerfile.prod \
              "."
       - name: Run container
@@ -59,7 +59,7 @@ jobs:
              -e ENVIRONMENT=dev \
              -e DATABASE_TEST_URL=sqlite://sqlite.db \
              -p 5003:8765 \
-             smitsgit/${{ env.IMAGE }}:latest
+             ${{ env.IMAGE }}:latest
       - name: Run Pytest
         run: docker exec fastapi-tdd python -m pytest
 #      - name: Run black
