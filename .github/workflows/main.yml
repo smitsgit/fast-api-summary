@@ -94,7 +94,7 @@ jobs:
         run: |
           docker login -u _ -p ${ HEROKU_AUTH_TOKEN } registry.heroku.com
         env:
-          HEROKU_AUTH_TOKEN: {{ secrets.HEROKU_AUTH_TOKEN }}
+          HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
 
        - name: Push to the registry
          run: docker push ${{ env.HEROKU_REGISTRY_IMAGE }}
