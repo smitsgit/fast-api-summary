@@ -1,13 +1,23 @@
 # pull official python image
 FROM python:3.8.3-slim-buster
 
-# set the working directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# create directory for the "app" user
+RUN mkdir -p /home/app
+
+# create the "app" user
+RUN addgroup --system app && adduser --system --group app
+
+# create the appropriate directories
+ENV HOME=/home/app
+ENV APP_HOME=$HOME/web
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
 
 # set the environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONBUFFERED 1
+ENV ENVIRONMENT prod
+ENV TESTING 0
 
 # install the system dependencies
 RUN apt-get update \
@@ -21,4 +31,13 @@ RUN pip install -r requirements.txt
 
 # add app
 COPY . .
+
+# chown all the files to app user
+RUN chown -R app:app $APP_HOME
+
+# change user to "app" user
+USER app
+
+# launch the gunicorn server
+CMD gunicorn --bind 0.0.0.0:$PORT app.main:app -k uvicorn.workers.UvicornWorker
 
